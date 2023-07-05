@@ -19,7 +19,7 @@ import // Colors,
 import RTNCalculator from 'rtn-calculator/js/NativeCalculator';
 import RTNCenteredText from 'rtn-centered-text/js/RTNCenteredTextNativeComponent';
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
   // const isDarkMode = useColorScheme() === 'dark';
   const [result, setResult] = useState<number | null>(null);
 
@@ -55,7 +55,7 @@ function App(): JSX.Element {
       </View>
     </SafeAreaView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
