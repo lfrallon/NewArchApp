@@ -2,6 +2,12 @@ module.exports = api => {
   const babelEnv = api.env();
   const plugins = [
     [
+      'transform-inline-environment-variables',
+      {
+        include: 'NODE_ENV',
+      },
+    ],
+    [
       'react-native-reanimated/plugin',
       {
         globals: ['__scanCodes'],

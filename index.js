@@ -4,6 +4,7 @@
 
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
+import 'react-native-get-random-values'; // required to use uuid
 
 import {AppRegistry} from 'react-native';
 import App from './src/App';
