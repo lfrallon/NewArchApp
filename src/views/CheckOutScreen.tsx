@@ -5,6 +5,7 @@ import {WebView, WebViewNavigation} from 'react-native-webview';
 
 import {RootStackScreenProps} from '../types/navigation';
 import {createCheckout} from '../services/checkout';
+import {retrievePayment} from '../services/retrievePayment';
 
 const CheckOutScreen = ({
   route,
@@ -17,7 +18,7 @@ const CheckOutScreen = ({
   const [isloading, setIsLoading] = useState(true);
   const [redirectUrl, setRedirectUrl] = useState('');
 
-  const handleNavigationStateChange = (event: WebViewNavigation) => {
+  const handleNavigationStateChange = async (event: WebViewNavigation) => {
     console.log(
       '🚀 ~ file: CheckOutScreen.tsx:14 ~ handleNavigationStateChange ~ event:',
       event,
@@ -29,7 +30,25 @@ const CheckOutScreen = ({
     }
 
     if (canGoBack && url.includes('success?')) {
-      navigation.goBack();
+      // navigation.goBack();
+      const refIndex = url.indexOf('success?id=');
+
+      if (refIndex !== -1) {
+        const extractedId = url.split('success?id=')[1];
+
+        try {
+          const data = await retrievePayment(extractedId);
+          console.log(
+            '🚀 ~ file: CheckOutScreen.tsx:41 ~ handleNavigationStateChange ~ data:',
+            data,
+          );
+        } catch (error) {
+          console.log(
+            '🚀 ~ file: CheckOutScreen.tsx:47 ~ handleNavigationStateChange ~ error:',
+            error,
+          );
+        }
+      }
     }
 
     if (canGoBack && url.includes('failed?')) {
@@ -50,8 +69,8 @@ const CheckOutScreen = ({
         );
         if (checkout) {
           console.log(
-            '🚀 ~ file: CheckOutScreen.tsx:57 ~ onCheckOut ~ checkout:',
-            checkout,
+            '🚀 ~ file: CheckOutScreen.tsx:57 ~ onCheckOut ~ checkout.checkoutId:',
+            checkout.checkoutId,
           );
           setIsLoading(false);
           setRedirectUrl(checkout.redirectUrl);
