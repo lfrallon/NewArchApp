@@ -1,52 +1,35 @@
 import React from 'react';
 import {Button, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {createCheckout} from '../services/checkout';
 import {RootStackScreenProps} from '../types/navigation';
 
 const LandingScreen = ({navigation}: RootStackScreenProps<'LandingScreen'>) => {
-  const onCheckout = async () => {
-    const cartData: Cart = {
-      items: [
-        {
-          product: {
-            name: 'Load',
-            unitPrice: 100,
-          },
-          quantity: 1,
-          totalPrice: 100,
+  const cartData: Cart = {
+    items: [
+      {
+        product: {
+          name: 'Load',
+          unitPrice: 100,
         },
-      ],
-      quantity: 1,
-      totalAmount: 100,
-    };
+        quantity: 1,
+        totalPrice: 100,
+      },
+    ],
+    quantity: 1,
+    totalAmount: 100,
+  };
 
-    const buyerData: User = {
-      email: 'email.example@gmail.com',
-      firstName: 'Email',
-      lastName: 'Example',
-    };
+  const buyerData: User = {
+    email: 'email.example@gmail.com',
+    firstName: 'Email',
+    lastName: 'Example',
+  };
 
-    try {
-      const checkout: CheckoutTransaction = await createCheckout(
-        cartData,
-        buyerData,
-      );
-      console.log(
-        '🚀 ~ file: App.tsx:141 ~ onCheckout ~ checkout:',
-        checkout.redirectUrl,
-      );
-      if (checkout) {
-        navigation.navigate('CheckOutScreen', {
-          redirectUrl: checkout.redirectUrl,
-        });
-      }
-    } catch (error) {
-      console.log(
-        '🚀 ~ file: LandingScreen.tsx:45 ~ onCheckout ~ error:',
-        error,
-      );
-    }
+  const handleCheckOutNav = () => {
+    return navigation.navigate('CheckOutScreen', {
+      cartData,
+      buyerData,
+    });
   };
 
   return (
@@ -55,7 +38,7 @@ const LandingScreen = ({navigation}: RootStackScreenProps<'LandingScreen'>) => {
       <View>
         <Text>Maya Sample</Text>
       </View>
-      <Button title="Checkout" onPress={onCheckout} />
+      <Button title="Checkout" onPress={handleCheckOutNav} />
     </SafeAreaView>
   );
 };
