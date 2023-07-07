@@ -3,7 +3,7 @@ import React, {useRef} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {WebView, WebViewNavigation} from 'react-native-webview';
 
-import {RootStackScreenProps} from '../utils/typescript/types/navigation';
+import {RootStackScreenProps} from '../types/navigation';
 
 const CheckOutScreen = ({
   route,

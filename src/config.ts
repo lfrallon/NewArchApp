@@ -1,6 +1,8 @@
+import Config from 'react-native-config';
+
 console.log(
-  '🚀 ~ file: config.ts:2 ~ REACT_APP_CHECKOUT_PUBLIC_API_KEY:',
-  process.env.REACT_APP_CHECKOUT_PUBLIC_API_KEY,
+  '🚀 ~ file: config.ts:2 ~ Config:',
+  Config.REACT_APP_CHECKOUT_PUBLIC_API_KEY,
 );
 
 const config = {
@@ -9,7 +11,7 @@ const config = {
   maya_checkout: {
     url: 'https://pg-sandbox.paymaya.com/checkout/v1/checkouts',
     pub_api_key: 'pk-Z0OSzLvIcOI2UIvDhdTGVVfRSSeiGStnceqwUE7n0Ah',
-    sec_api_key: 'not required',
+    sec_api_key: Config.REACT_APP_CHECKOUT_SECRET_API_KEY || 'not required',
   },
 };
 

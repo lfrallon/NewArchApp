@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, StatusBar, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {createCheckout} from '../services/checkout';
-import {RootStackScreenProps} from '../utils/typescript/types/navigation';
+import {RootStackScreenProps} from '../types/navigation';
 
 const LandingScreen = ({navigation}: RootStackScreenProps<'LandingScreen'>) => {
   const onCheckout = async () => {
@@ -26,23 +26,31 @@ const LandingScreen = ({navigation}: RootStackScreenProps<'LandingScreen'>) => {
       firstName: 'Email',
       lastName: 'Example',
     };
-    const checkout: CheckoutTransaction = await createCheckout(
-      cartData,
-      buyerData,
-    );
-    console.log(
-      '🚀 ~ file: App.tsx:141 ~ onCheckout ~ checkout:',
-      checkout.redirectUrl,
-    );
-    if (checkout) {
-      navigation.navigate('CheckOutScreen', {
-        redirectUrl: checkout.redirectUrl,
-      });
+
+    try {
+      const checkout: CheckoutTransaction = await createCheckout(
+        cartData,
+        buyerData,
+      );
+      console.log(
+        '🚀 ~ file: App.tsx:141 ~ onCheckout ~ checkout:',
+        checkout.redirectUrl,
+      );
+      if (checkout) {
+        navigation.navigate('CheckOutScreen', {
+          redirectUrl: checkout.redirectUrl,
+        });
+      }
+    } catch (error) {
+      console.log(
+        '🚀 ~ file: LandingScreen.tsx:45 ~ onCheckout ~ error:',
+        error,
+      );
     }
   };
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor: '#427FC1'}]}>
+    <SafeAreaView style={[styles.container]}>
       <StatusBar barStyle={'dark-content'} />
       <View>
         <Text>Maya Sample</Text>
@@ -57,6 +65,7 @@ export default LandingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#427FC1',
   },
   sectionContainer: {
     marginTop: 32,

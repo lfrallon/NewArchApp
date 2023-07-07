@@ -12,8 +12,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import LandingScreen from './views/LandingScreen';
 import CheckOutScreen from './views/CheckOutScreen';
-
-import {RootStackParamList} from './utils/typescript/types/navigation';
+import {RootStackParamList} from './types/navigation';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
